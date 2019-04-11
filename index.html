@@ -291,27 +291,20 @@ function calculateCost()
 {
 let numEmployees = document.getElementById("employees").value;
 let durationManMonths = document.querySelector("input[name=Duration]").value;
+let cost = document.getElementById("rcost").innerText;
+let projectCost = Number(cost.replace(/[^0-9.-]+/g,""));
 
-// since duration is man months, to get the amount of time spent for one person, multiply man months duration by itself
-// multiply this by 30 for number of days, and then by 8 for hours worked in a day
-// multiply this by the wage to get the total amount for one employee
-// multiply 
-let projectCost = (durationManMonths * durationManMonths * 8 * 30 * document.getElementById("wage").value * numEmployees).toFixed(2);
 
-//set the value
-document.getElementById("projectTotalCost").value = projectCost;
-
-// cost per day is this cost divided by 30 days in a month
 
 let costPerEmployee = projectCost / numEmployees;
+document.getElementById("costPerEmployee").value = costPerEmployee.toFixed(2);
 
-document.getElementById("costPerEmployee").value = costPerEmployee;
+let timeInDays = (durationManMonths / numEmployees) * 30.4167;
+document.getElementById("projectTimeMonths").value = timeInDays.toFixed(2);
 
-let costPerDay = projectCost / 30;
+// cost per day is this cost divided by 30 days in a month
+let costPerDay = (costPerEmployee / timeInDays) * numEmployees;
 document.getElementById("costPerDay").value = costPerDay.toFixed(2);
-
-let months = (durationManMonths / numEmployees) * 30;
-document.getElementById("projectTimeMonths").value = months.toFixed(2);
 }
 
             // -->
@@ -1176,17 +1169,16 @@ document.getElementById("projectTimeMonths").value = months.toFixed(2);
 
 <h4>Step 5: Calculate the cost of this project: <small class="text-muted">(Richard Choppick)</small></h4>
 <div style="border: 1px solid black; border-radius: 15px; padding:20px;" class="form-group col-xs-12">
-
 <div class="form-group col-xs-12 form-inline ">
-	<label  for="wage">Enter your employee wage ($/hr):</label><input type="number" name="wage" id="wage" value="14.00" class="form-control" />
 	<label  for="employees">&nbsp;Enter the number of employees on the project:</label><input type="number" name="employees" id="employees" value="1" class="form-control" />
 </div>
 <div class="form-group col-xs-12 form-inline ">
-	<label>Project Cost: $</label>&nbsp;&nbsp;<input readonly id="projectTotalCost" class="form-control" />&nbsp;&nbsp;
 	<label>Cost per Employee: $</label>&nbsp;&nbsp;<input readonly id="costPerEmployee" class="form-control" />&nbsp;&nbsp;
 </div>
 <div class="form-group col-xs-12 form-inline ">
-	<label>Time in days (based on # of employees): </label>&nbsp;&nbsp;<input readonly id="projectTimeMonths" class="form-control" />Days&nbsp;&nbsp;
+	<label>Time in days</label>&nbsp;&nbsp;<input readonly id="projectTimeMonths" class="form-control" />&nbsp;Days &nbsp;&nbsp;
+</div>
+<div class="form-group col-xs-12 form-inline ">
 	<label>Cost per Day: $</label>&nbsp;&nbsp;<input readonly id="costPerDay" class="form-control" />&nbsp;&nbsp;
 </div>
 <div class="form-group col-xs-12">
