@@ -275,13 +275,13 @@
 		var errors = 0;
 		if (type == 0) { alert("We must select a project type."); }
                 else if (type == 1) {
-			errors = (loc/1000) * 0.50;
+			errors = (loc) * 0.50;
                 }
                 else if (type == 2) {
-		errors = (loc/1000) * 0.65;
+		errors = (loc) * 0.65;
                 }
                 else if (type == 3) {
-		errors = (loc/1000) * 0.75;
+		errors = (loc) * 0.75;
                 }
 		 $("#error").val(errors);
                 document.calculateForm.Reset.focus();
