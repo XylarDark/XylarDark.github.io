@@ -25,7 +25,7 @@
             //    document.write("<HR>");
             //  This function is used to reset all fields.
             function clearStatus() { status = ""; }
-
+		
             //  The following functions are ro initialize all fields.
             function promptFactor() { status = "Factor"; }
             function promptLanguage() { status = "Language"; }
@@ -53,6 +53,7 @@
                 }
                 return 0;
             }
+		
 
             //  This finction is used to round numbers.  It will take two parameters: value and precision.
             //  It will round that value to that precision.
@@ -220,6 +221,7 @@
                 showWeightingTotal();
                 totalfp = Number(document.calculateForm.total1.value) * (0.65 + 0.01 * Number(document.calculateForm.total.value))
                 document.calculateForm.fpTotal.value = roundOff(totalfp, 2);
+		    
             }
 
             // This function will calculate the Lines of code (LOC)
@@ -266,6 +268,23 @@
                 }
                 document.calculateForm.Reset.focus();
             }
+		
+	function calculateErrors(){
+		var loc = document.calculateForm.LOCTotal.value;
+		var errors = 0;
+		if (type == 0) { alert("We must select a project type."); }
+                else if (type == 1) {
+			errors = (loc/1000) * 0.50;
+                }
+                else if (type == 2) {
+		errors = (loc/1000) * 0.65;
+                }
+                else if (type == 3) {
+		errors = (loc/1000) * 0.75;
+                }
+		 $("#error").html(error);
+                document.calculateForm.Reset.focus();
+		}
 
 function calculateCost()
 {
@@ -1075,7 +1094,7 @@ document.getElementById("projectTimeMonths").value = months.toFixed(2);
 <div style="border: 1px solid black; border-radius: 15px; padding:20px;" class="form-group col-xs-12">
 
 <div class="form-group col-xs-12 form-inline ">
-	<label  for="wage">Number of errors per KLOC:</label><input type="number" name="error" id="error" class="form-control" disabled = true/>
+	<label  for="wage">Number of errors:</label><input type="number" name="error" id="error" class="form-control" disabled = true/>
 </div>
 
 <div class="form-group col-xs-12">
