@@ -273,7 +273,7 @@ let durationDays = document.querySelector("input[name=Duration]").value;
 //8 hours per day * number of days * hourly wage
 let projectCost = (durationDays * 8 * document.getElementById("wage").value).toFixed(2);
 document.getElementById("projectTotalCost").value = projectCost;
-let numEmployees = document.getElementById("employees").value;
+let numEmployees = document.getElementById("employees").val();
 document.getElementById("costPerEmployee").value = (projectCost / numEmployees).toFixed(2);
 
 let costPerDay = numEmployees * 8 * document.getElementById("wage").value;
