@@ -5,15 +5,22 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <TITLE>SiCOMO | The Simulated COCOMO</TITLE>
     <base target="_self">
-
-    <!-- The speedsheet here in JSON -->
-    <script type="text/javascript" src="language_prod.js"></script>
 </HEAD>
 
 <BODY>
     <div class="container">
         <h1> SiCOMO : The Simulated COCOMO (By Nishant Kambhatla)</h1>
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
         <SCRIPT LANGUAGE="JavaScript">
+            var fp = 0;
+            var LOC = 0;
+            var timeInMonths = 0;
+
+            var androidFP = 0;
+            var androidLOC = 0;
+            var androidMonths = 0;
+            var androidHours = 0;
+            var androidCost = 0;
             //    document.write("<HR>");
             //  This function is used to reset all fields.
             function clearStatus() { status = ""; }
@@ -212,6 +219,7 @@
                 showWeightingTotal();
                 totalfp = Number(document.calculateForm.total1.value) * (0.65 + 0.01 * Number(document.calculateForm.total.value))
                 document.calculateForm.fpTotal.value = roundOff(totalfp, 2);
+                fp = roundOff(totalfp, 2);
             }
 
             // This function will calculate the Lines of code (LOC)
@@ -226,6 +234,7 @@
                     loc = language * Number(document.calculateForm.fpTotal.value);
                     // store result in the LOCTotal text box.
                     document.calculateForm.LOCTotal.value = roundOff(loc, 2);
+                    LOC = roundOff(loc, 2);
                 }
             }
             //  This fucntion will take the LOC which was calculated in previous step and divided it by 1000 and then
@@ -256,21 +265,11 @@
                     document.calculateForm.Effort.value = roundOff(E, 2);
                     document.calculateForm.Duration.value = roundOff(D, 2);
                 }
+
+                timeInMonths = roundOff(D, 2);
                 document.calculateForm.Reset.focus();
             }
 
-function calculateCost()
-{
-let durationDays = document.querySelector("input[name=Duration]").value;
-//8 hours per day * number of days * hourly wage
-let projectCost = (durationDays * 8 * document.getElementById("wage").value).toFixed(2);
-document.getElementById("projectTotalCost").value = projectCost;
-let numEmployees = document.getElementById("employees").value;
-document.getElementById("costPerEmployee").value = (projectCost / numEmployees).toFixed(2);
-
-let costPerDay = numEmployees * 8 * document.getElementById("wage").value;
-document.getElementById("costPerDay").value = costPerDay.toFixed(2);
-}
             // -->
             // End of JavaScript code
         </SCRIPT>
@@ -319,7 +318,7 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                         <th scope="row">Number of user inputs</th>
                         <td scope="row">
                             <INPUT TYPE="TEXT" NAME="inputs" value="" size=5 onFocus="promptFactor()"
-                                   onBlur="clearStatus()" class="form-control">
+                                   onBlur="clearStatus()">
                         </td>
                         <td scope="row">
                             3
@@ -334,14 +333,14 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                             =
                         </td>
                         <td scope="row">
-                            <INPUT TYPE="TEXT" NAME="tinputs" value="" size=5 onfocus="return unfocus_tinputs()" class="form-control">
+                            <INPUT TYPE="TEXT" NAME="tinputs" value="" size=5 onfocus="return unfocus_tinputs()">
                         </td>
                     </Tr>
                     <Tr>
                         <th scope="row">Number of user outputs</th>
                         <td scope="row">
                             <INPUT TYPE="TEXT" NAME="outputs" value="" size=5 onFocus="promptFactor()"
-                                   onBlur="clearStatus()" class="form-control">
+                                   onBlur="clearStatus()">
                         </td>
                         <td scope="row">
                             4
@@ -356,14 +355,14 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                             =
                         </td>
                         <td scope="row">
-                            <INPUT TYPE="TEXT" NAME="toutputs" value="" size=5 onfocus="return unfocus_toutputs()" class="form-control">
+                            <INPUT TYPE="TEXT" NAME="toutputs" value="" size=5 onfocus="return unfocus_toutputs()">
                         </td>
                     </Tr>
                     <Tr>
                         <th scope="row">Number of user inquiries</th>
                         <td scope="row">
                             <INPUT TYPE="TEXT" NAME="inquiries" value="" size=5 onFocus="promptFactor()"
-                                   onBlur="clearStatus()" class="form-control" class="form-control">
+                                   onBlur="clearStatus()">
                         </td>
                         <td scope="row">
                             3
@@ -378,14 +377,14 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                             =
                         </td>
                         <td scope="row">
-                            <INPUT TYPE="TEXT" NAME="tinquiries" value="" size=5 onfocus="return unfocus_toutputs()" class="form-control">
+                            <INPUT TYPE="TEXT" NAME="tinquiries" value="" size=5 onfocus="return unfocus_toutputs()">
                         </td>
                     </Tr>
                     <Tr>
                         <th scope="row">Number of files</th>
                         <td scope="row">
                             <INPUT TYPE="TEXT" NAME="files" value="" size=5 onFocus="promptFactor()"
-                                   onBlur="clearStatus()" class="form-control">
+                                   onBlur="clearStatus()">
                         </td>
                         <td scope="row">
                             7
@@ -400,7 +399,7 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                             =
                         </td>
                         <td scope="row">
-                            <INPUT TYPE="TEXT" NAME="tfiles" value="" size=5 onfocus="return unfocus_toutputs()" class="form-control">
+                            <INPUT TYPE="TEXT" NAME="tfiles" value="" size=5 onfocus="return unfocus_toutputs()">
                         </td>
                     </Tr>
 
@@ -408,7 +407,7 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                         <th scope="row">Number of external interfaces</th>
                         <td scope="row">
                             <INPUT TYPE="TEXT" NAME="interfaces" value="" size=5 onFocus="promptFactor()"
-                                   onBlur="clearStatus()" class="form-control">
+                                   onBlur="clearStatus()">
                         </td>
                         <td scope="row">
                             5
@@ -423,7 +422,7 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                             =
                         </td>
                         <td scope="row">
-                            <INPUT TYPE="TEXT" NAME="tinterfaces" value="" size=5 onfocus="return unfocus_toutputs()" class="form-control">
+                            <INPUT TYPE="TEXT" NAME="tinterfaces" value="" size=5 onfocus="return unfocus_toutputs()">
                         </td>
                     </Tr>
                 <th scope="row">
@@ -436,7 +435,7 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                 <td scope="row"></td>
                 <td scope="row"></td>
                 <td scope="row">
-                    <INPUT TYPE="TEXT" VALUE="" NAME="total1" size=10 onfocus="return unfocus_total1()" class="form-control">
+                    <INPUT TYPE="TEXT" VALUE="" NAME="total1" size=10 onfocus="return unfocus_total1()">
                 </td>
 
             </TABLE>
@@ -444,7 +443,7 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
             <P>
                 <!-- a button which the user will click to get the count total value from the table.
                 -->
-                <INPUT TYPE="BUTTON" Name="countTotal" VALUE="Count Total" onClick="showCountTotal()"  class="btn btn-primary">
+                <INPUT TYPE="BUTTON" Name="countTotal" VALUE="Count Total" onClick="showCountTotal()">
 
                 <!-- Starting the second step
                 -->
@@ -510,7 +509,7 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                             </td>
                             <td scope="row">
                                 <INPUT TYPE="RADIO" NAME="Q1Field" value="5" onFocus="promptQ1()"
-                                       onBlur="clearStatus()" >
+                                       onBlur="clearStatus()">
                             </td>
                         </Tr>
                         <Tr>
@@ -913,7 +912,7 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                         <Tr>
                             <th scope="row">Total</th>
                             <td scope="row">
-                                <INPUT TYPE="TEXT" VALUE="" NAME="total" size=6 onfocus="return unfocus_total()" class="form-control">
+                                <INPUT TYPE="TEXT" VALUE="" NAME="total" size=6 onfocus="return unfocus_total()">
                             </td>
                         </Tr>
                     </tbody>
@@ -924,19 +923,19 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                 -->
 
                 <INPUT TYPE="BUTTON" Name="showTotalWeight" VALUE="Show Total of weighting Factor"
-                       onClick="showWeightingTotal()" class="btn btn-primary"  class="btn btn-primary">
+                       onClick="showWeightingTotal()">
 
-                <br/>
-                <br/>
+                <BR>
+                <BR>
 
                 <label>The Function Points is: </label>
 
                 <!-- a button which the user will click to get the Function Pioints value based on results form the first two tabgles.
                 -->
-<div class="form-group form-inline">
-                <INPUT TYPE="BUTTON" Name="FP" VALUE="Show Function Points" onClick="showFP()"  class="btn btn-primary" >
-                <INPUT TYPE="TEXT" VALUE="" NAME="fpTotal" size=10 onfocus="return unfocus_fpTotal()" class="form-control" style="width: 200px;">
-</div>
+                <INPUT TYPE="BUTTON" Name="FP" VALUE="Show Function Points" onClick="showFP()">
+
+                <INPUT TYPE="TEXT" VALUE="" NAME="fpTotal" size=10 onfocus="return unfocus_fpTotal()">
+
                 <BR>
 
                 <H4> Step 3: Choose project language type.</H4>
@@ -959,6 +958,16 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                             </td>
                             <td scope="row">
                                 <INPUT TYPE="RADIO" NAME="LanguageField" value="320"
+                                       onFocus="promptLanguage()" onBlur="clearStatus()">
+                            </td>
+                        </Tr>
+                        <Tr>
+                            <th scope="row">Java</th>
+                            <td scope="row">
+                                53 FP/Man-months = 14.84854613 Level 6
+                            </td>
+                            <td scope="row">
+                                <INPUT TYPE="RADIO" NAME="LanguageField" value="53"
                                        onFocus="promptLanguage()" onBlur="clearStatus()">
                             </td>
                         </Tr>
@@ -1023,6 +1032,16 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                             </td>
                         </Tr>
                         <Tr>
+                            <th scope="row">Object-Oriented Languages</th>
+                            <td scope="row">
+                                30
+                            </td>
+                            <td scope="row">
+                                <INPUT TYPE="RADIO" NAME="LanguageField" value="30"
+                                       onFocus="promptLanguage()" onBlur="clearStatus()">
+                            </td>
+                        </Tr>
+                        <Tr>
                             <th scope="row">FourTH scope="col"Generation Languages (4GLs)</th>
                             <td scope="row">
                                 20
@@ -1041,7 +1060,17 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                                 <INPUT TYPE="RADIO" NAME="LanguageField" value="15"
                                        onFocus="promptLanguage()" onBlur="clearStatus()">
                             </td>
-                        </Tr>                       
+                        </Tr>
+                        <Tr>
+                            <th scope="row"> Spreadsheets</th>
+                            <td scope="row">
+                                6
+                            </td>
+                            <td scope="row">
+                                <INPUT TYPE="RADIO" NAME="LanguageField" value="6"
+                                       onFocus="promptLanguage()" onBlur="clearStatus()">
+                            </td>
+                        </Tr>
                         <Tr>
                             <th scope="row"> Spreadsheets</th>
                             <td scope="row">
@@ -1070,12 +1099,68 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
 
                 <!-- a button which the user will click to get the LOC/FP based on results the third table and the FP calculateD
                 -->
-<div class="form-inline">
-                <label >LOC/FP:</label>
-                <INPUT TYPE="BUTTON" Name="LOCFP" VALUE="Show LOC/FP" onClick="showLOC()" class="btn btn-primary">
-<INPUT TYPE="TEXT" VALUE="" NAME="LOCTotal" size=10
-                       onfocus="return unfocus_LOCTotal()" class="form-control">
-</div>
+                <label>LOC/FP:</label>
+                <INPUT TYPE="BUTTON" Name="LOCFP" VALUE="Show LOC/FP" onClick="showLOC()">
+
+                <INPUT TYPE="TEXT" VALUE="" NAME="LOCTotal" size=10
+                       onfocus="return unfocus_LOCTotal()">
+
+
+                <!-- Android -->
+
+                <br/><br/>
+
+                <h4>(Optional) Is this an Android project: </h4>
+                
+                <TABLE class="table">
+                    <thead>
+                        <TR>
+                            <TH scope="col"> Question </TH>
+                            <TH scope="col"> Yes </TH>
+                            <TH scope="col"> No </TH>
+                        </TR>
+                    </thead>
+                    <tbody>
+                        <Tr>
+                            <th scope="row">
+                                How many Activities/Fragments
+                            </th>
+                            <td scope="row">
+                                <INPUT id="activities" TYPE="TEXT" NAME="cost" value="" size=10>
+                            </td>
+                            <td scope="row"></td>
+                        </Tr>
+                        <Tr>
+                            <th scope="row">
+                                Does it use a database?
+                            </th>
+                            <td scope="row">
+                                <INPUT id="dbCheckedYes" TYPE="RADIO" NAME="db" value="0">
+                            </td>
+                            <td scope="row">
+                                <INPUT id="dbCheckedNo" TYPE="RADIO" NAME="db" value="1">
+                            </td>
+                        </Tr>
+                        <Tr>
+                            <th scope="row">
+                                Will it be getting data from an API?
+                            </th>
+                            <td scope="row">
+                                <INPUT id="apiCheckedYes" TYPE="RADIO" NAME="api" value="0">
+                            </td>
+                            <td scope="row">
+                                <INPUT id="apiCheckedYes" TYPE="RADIO" NAME="api" value="1">
+                            </td>
+                        </Tr>
+                    </tbody>
+                </TABLE>
+
+                <INPUT TYPE="button" VALUE="Update"
+                       onClick="calculateAndroidProj()">
+
+                <!-- Android End -->
+
+
                 <h4> Step 4:  Final Step is to select complexity of the software project:</h4>
 
                 <!-- Creating the last table wiTH scope="col"its properties
@@ -1132,68 +1217,165 @@ document.getElementById("costPerDay").value = costPerDay.toFixed(2);
                 <!-- a button which the user will click to get the final  caluclation of the Effort and the Duration of a software project
                 -->
                 <INPUT TYPE="BUTTON" Name="calculate" VALUE="Calculate Effort and Duration"
-                       onClick="showE()" class="btn btn-primary">
-                <br/>
-<br/>
+                       onClick="showE()">
+                <BR>
                 <label>
                     Effort (E) = ab(KLOC)<sup>b</sup>b =
                 </label>
                 <!-- text boxes where the final results will be stored
                 -->
                 <INPUT TYPE="TEXT" VALUE="" NAME="Effort" size=10
-                       onfocus="return unfocus_Effort()" class="form-control" style="width:200px;">
-                <label>Duration (D) = cb(E)<sup>d</sup><sup>b</sup> =</label>
+                       onfocus="return unfocus_Effort()"> &nbsp;&nbsp;&nbsp;&nbsp
+                <label>
+                    Duration (D) = cb(E)<sup>d</sup><sup>b</sup>
+                    =
+                </label>
 
                 <INPUT TYPE="TEXT" VALUE="" NAME="Duration" size=10
-                       onfocus="return unfocus_Duration()" class="form-control" style="width:200px;">
+                       onfocus="return unfocus_Duration()">
                 <BR><BR>
+
+
+                <h4> Sang temp Getting cost:</h4>
+
+                Hourly Wage
+                <INPUT id="hourly" TYPE="TEXT" value="" size=5>
+                Salary
+                <INPUT id="salary" TYPE="TEXT" value="" size=5>
+                <br/><br>
+                <p>Cost = working hours * wage</p>
+                <INPUT id="cost" TYPE="TEXT" NAME="cost" value="" size=10>
+
+                <INPUT TYPE="BUTTON" Name="calculate" VALUE="Calculate Cost"
+                       onClick="showCost()">
                 <!-- a button which the user can click it to reset all fields on the form
                 -->
-                <h4>Step 5: Calculate the cost of this project: <small class="text-muted">(Richard Choppick)</small></h4>
-<div style="border: 1px solid black; border-radius: 15px; padding:20px;" class="form-group col-xs-12">
 
-<div class="form-group col-xs-12 form-inline ">
-<label  for="wage">Enter your employee wage ($/hr):</label><input type="number" name="wage" id="wage" value="14.00" class="form-control" />
-<label  for="employees">&nbsp;Enter the number of employees on the project:</label><input type="number" name="employees" id="employees" value="1" class="form-control" />
-</div>
-<div class="form-group col-xs-12 form-inline ">
-<label>Project Cost: $</label>&nbsp;&nbsp;<input readonly id="projectTotalCost" class="form-control" />&nbsp;&nbsp;
-<label>Cost per Employee: $</label>&nbsp;&nbsp;<input readonly id="costPerEmployee" class="form-control" />&nbsp;&nbsp;
-<label>Cost per Day: $</label>&nbsp;&nbsp;<input readonly id="costPerDay" class="form-control" />&nbsp;&nbsp;
-</div>
-<div class="form-group col-xs-12">
-<button onclick="event.preventDefault(); calculateCost();" class="btn btn-primary">Calculate Project Cost</button>
-</div>
-</div>
-<br/>
+
+                <p>------------------------</p>
+
+                <h4> Results Summary:</h4>
+
+                <TABLE class="table">
+                    <tr>
+                        <td>FP</td>
+                        <td>LOC</td>
+                        <td>Time/months</td>
+                        <td>Working Hours</td>
+                        <td>Total Cost</td>
+                    </tr>
+                    <tr>
+                        <td id="rfp"></td>
+                        <td id="rloc"></td>
+                        <td id="rtime"></td>
+                        <td id="rhours"></td>
+                        <td id="rcost"></td>
+                    </tr>
+                </TABLE>
+
+
+
                 <INPUT TYPE="RESET" Name="Reset" VALUE="Reset Data"
                        onClick="clearStatus()">
+
         </FORM>
         <!--closing the body
         -->
     </div>
-
-
-    <!-- Dan stuff -->
-    <div class="dan">
-        <h2>Calculate with ...</h2>
-        <form>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <div class="form-group form-check">
-                <input type="text" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    <script type="text/javascript" src="dan.js"></script>
 </BODY>
+<script type="text/javascript">
+    function showCost(){
+                updateFinalResults();
+    }
+
+    function updateFinalResults(){
+        console.log('updated');
+        var hourly = document.getElementById('hourly').value;
+        var salary = document.getElementById('salary').value;
+        var cost = document.getElementById('cost');
+        var dbChecked = document.getElementById('dbCheckedYes');
+        var apiChecked = document.getElementById('apiCheckedYes');
+
+
+        var rfp = document.getElementById('rfp');
+        var rLOC = document.getElementById('rloc');
+        var rtime = document.getElementById('rtime');
+        var rhours = document.getElementById('rhours');
+        var rcost = document.getElementById('rcost');
+        var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
+
+        var totalCost = "$" + roundOff(workingHours * hourly, 2);
+        cost.value = totalCost;
+
+        console.log('and loc' + androidLOC);
+        console.log('LOC ' + LOC);
+        console.log('FP ' + fp);
+        console.log('and fp ' + androidFP);
+
+        if (androidLOC != "" || dbChecked.checked || apiChecked.checked) {
+            console.log('here');
+            rfp.innerHTML = androidFP;
+            rLOC.innerHTML = androidLOC;
+            rtime.innerHTML = roundOff(androidMonths, 2);
+            rhours.innerHTML = androidHours;
+            rcost.innerHTML = "$" + androidCost;
+        } else {
+            console.log('else here');
+            rfp.innerHTML = fp;
+            rLOC.innerHTML = LOC;
+            rtime.innerHTML = timeInMonths;
+            rhours.innerHTML = workingHours
+            rcost.innerHTML = totalCost;
+        }
+    }
+
+    function calculateAndroidProj(){
+        var numActivity = document.getElementById('activities').value;
+        var dbChecked = document.getElementById('dbCheckedYes');
+        var apiChecked = document.getElementById('apiCheckedYes');
+        var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
+
+        //approx new LOC when adding activities
+        if (numActivity == 0) {
+            androidLOC = parseFloat(LOC);
+        } else if (numActivity == "") {
+            androidLOC  = 0;
+            androidFP = 0;
+            androidHours = 0;
+            androidMonths = 0;
+            androidCost = 0;
+        }
+        else {
+            androidLOC = parseFloat(LOC) + (numActivity * 100);
+            androidFP = parseFloat(fp) + 1.5;
+            androidMonths =  parseFloat(timeInMonths) + 0.2;
+            androidHours = parseFloat(workingHours) + 5;
+            androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
+        }
+
+        if (dbChecked.checked) {
+            console.log('db check');
+            androidLOC += 100;
+            androidFP = parseFloat(fp) + 5;
+            androidMonths =  parseFloat(timeInMonths) + 0.5;
+            androidHours = parseFloat(workingHours) + 15;
+            androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
+        }
+
+        if (apiChecked.checked) {
+            console.log('api check');
+            androidLOC += 200;
+            androidFP = fp + 5;
+            androidMonths =  parseFloat(timeInMonths) + 1;
+            androidHours = parseFloat(timeInMonths) + 10;
+            androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
+        }
+
+        updateFinalResults();
+    }
+</script>
+
+<!-- End of Code.
+    -->
+
 </HTML>
