@@ -1071,6 +1071,18 @@ document.getElementById("projectTimeMonths").value = months.toFixed(2);
 </div>
 </div>
 <br/>
+<h4>Step 6: Calculate the errors of this project: <small class="text-muted">(Riley Hancox)</small></h4>
+<div style="border: 1px solid black; border-radius: 15px; padding:20px;" class="form-group col-xs-12">
+
+<div class="form-group col-xs-12 form-inline ">
+	<label  for="wage">Number of errors per KLOC ($/hr):</label><input type="number" name="error" id="error" class="form-control" disabled = true/>
+</div>
+
+<div class="form-group col-xs-12">
+	<button onclick="event.preventDefault(); calculateErrors();" class="btn btn-primary">Calculate Error amount</button>
+</div>
+</div>
+<br/>			
                 <INPUT TYPE="RESET" Name="Reset" VALUE="Reset Data"
                        onClick="clearStatus()">
         </FORM>
