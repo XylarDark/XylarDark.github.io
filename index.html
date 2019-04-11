@@ -7,6 +7,7 @@
     <base target="_self">
 
     <!-- The speedsheet here in JSON -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="language_prod.js"></script>
 </HEAD>
 
@@ -14,6 +15,13 @@
     <div class="container">
         <h1> SiCOMO : The Simulated COCOMO (By Nishant Kambhatla)</h1>
         <SCRIPT LANGUAGE="JavaScript">
+                $( document ).ready(function() {
+                  $.each(languageProd , function (i, p) {
+  $('#langSelection').append($('<option></option>').val(p.LOC).html(p.LANGUAGE));
+});
+    });
+
+            
             //    document.write("<HR>");
             //  This function is used to reset all fields.
             function clearStatus() { status = ""; }
@@ -219,7 +227,7 @@
                 var language = 0
                 var loc = 0
                 showFP();
-                language = getValue(document.calculateForm.LanguageField)
+                language = $('#langSelection').find(":selected").val();
                 //  This is to check if user selected a language or not.
                 if (language == 0) { alert("We must select a Language"); }
                 else {
@@ -957,131 +965,11 @@ document.getElementById("projectTimeMonths").value = months.toFixed(2);
                 <!-- Creating the third table wiTH scope="col"its properties
                    Here is a list of languages and LOC assoicated wiTH scope="col"it.
                 -->
-                <TABLE class="table">
-                    <thead>
-                        <TR>
-                            <TH scope="col"> Programming Language </TH>
-                            <TH scope="col"> LOC/FP (average) </TH>
-                            <TH scope="col"> Select </TH>
-                        </TR>
-                    </thead>
-                    <tbody>
-                        <Tr>
-                            <th scope="row">Assembly Language</th>
-                            <td scope="row">
-                                320
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="320"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row">C</th>
-                            <td scope="row">
-                                128
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="320"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row">COBOL</th>
-                            <td scope="row">
-                                105
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="105"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row">Fortran</th>
-                            <td scope="row">
-                                105
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="105"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row">Pascal</th>
-                            <td scope="row">
-                                90
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="90"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row">Ada</th>
-                            <td scope="row">
-                                70
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="70"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row">Object-Oriented Languages</th>
-                            <td scope="row">
-                                30
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="30"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row">FourTH scope="col"Generation Languages (4GLs)</th>
-                            <td scope="row">
-                                20
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="20"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row">Code Generators</th>
-                            <td scope="row">
-                                15
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="15"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>                       
-                        <Tr>
-                            <th scope="row"> Spreadsheets</th>
-                            <td scope="row">
-                                6
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="6"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                        <Tr>
-                            <th scope="row"> Graphical Languages (icons)</th>
-                            <td scope="row">
-                                4
-                            </td>
-                            <td scope="row">
-                                <INPUT TYPE="RADIO" NAME="LanguageField" value="4"
-                                       onFocus="promptLanguage()" onBlur="clearStatus()">
-                            </td>
-                        </Tr>
-                    </tbody>
-
-                    <!-- Closing the third table.
-                    -->
-                </TABLE>
-
+                    <div class="form-inline">
+                <select id="langSelection">
+    
+                </select>
+</div>
                 <!-- a button which the user will click to get the LOC/FP based on results the third table and the FP calculateD
                 -->
 <div class="form-inline">
