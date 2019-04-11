@@ -5,6 +5,12 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <TITLE>SiCOMO | The Simulated COCOMO</TITLE>
     <base target="_self">
+
+
+    <!-- The speedsheet here in JSON -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="language_prod.js"></script>
+
 </HEAD>
 
 <BODY>
@@ -12,6 +18,7 @@
         <h1> SiCOMO : The Simulated COCOMO (By Nishant Kambhatla)</h1>
         <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
         <SCRIPT LANGUAGE="JavaScript">
+
             var fp = 0;
             var LOC = 0;
             var timeInMonths = 0;
@@ -21,6 +28,15 @@
             var androidMonths = 0;
             var androidHours = 0;
             var androidCost = 0;
+
+                $( document ).ready(function() {
+                  $.each(languageProd , function (i, p) {
+  $('#langSelection').append($('<option></option>').val(p.LOC).html(p.LANGUAGE));
+});
+    });
+
+            
+
             //    document.write("<HR>");
             //  This function is used to reset all fields.
             function clearStatus() { status = ""; }
@@ -227,7 +243,7 @@
                 var language = 0
                 var loc = 0
                 showFP();
-                language = getValue(document.calculateForm.LanguageField)
+                language = $('#langSelection').find(":selected").val();
                 //  This is to check if user selected a language or not.
                 if (language == 0) { alert("We must select a Language"); }
                 else {
@@ -269,6 +285,34 @@
                 timeInMonths = roundOff(D, 2);
                 document.calculateForm.Reset.focus();
             }
+
+
+function calculateCost()
+{
+let numEmployees = document.getElementById("employees").value;
+let durationManMonths = document.querySelector("input[name=Duration]").value;
+
+// since duration is man months, to get the amount of time spent for one person, multiply man months duration by itself
+// multiply this by 30 for number of days, and then by 8 for hours worked in a day
+// multiply this by the wage to get the total amount for one employee
+// multiply 
+let projectCost = (durationManMonths * durationManMonths * 8 * 30 * document.getElementById("wage").value * numEmployees).toFixed(2);
+
+//set the value
+document.getElementById("projectTotalCost").value = projectCost;
+
+// cost per day is this cost divided by 30 days in a month
+
+let costPerEmployee = projectCost / numEmployees;
+
+document.getElementById("costPerEmployee").value = costPerEmployee;
+
+let costPerDay = projectCost / 30;
+document.getElementById("costPerDay").value = costPerDay.toFixed(2);
+
+let months = (durationManMonths / numEmployees) * 30;
+document.getElementById("projectTimeMonths").value = months.toFixed(2);
+}
 
             // -->
             // End of JavaScript code
@@ -942,6 +986,7 @@
                 <!-- Creating the third table wiTH scope="col"its properties
                    Here is a list of languages and LOC assoicated wiTH scope="col"it.
                 -->
+
                 <TABLE class="table">
                     <thead>
                         <TR>
@@ -1096,6 +1141,13 @@
                     <!-- Closing the third table.
                     -->
                 </TABLE>
+
+
+             /*       <div class="form-inline">
+                <select id="langSelection">
+    
+                </select>
+</div>*/
 
                 <!-- a button which the user will click to get the LOC/FP based on results the third table and the FP calculateD
                 -->
@@ -1252,6 +1304,7 @@
                 -->
 
 
+
                 <p>------------------------</p>
 
                 <h4> Results Summary:</h4>
@@ -1274,6 +1327,28 @@
                 </TABLE>
 
 
+
+
+<h4>Step 5: Calculate the cost of this project: <small class="text-muted">(Richard Choppick)</small></h4>
+<div style="border: 1px solid black; border-radius: 15px; padding:20px;" class="form-group col-xs-12">
+
+<div class="form-group col-xs-12 form-inline ">
+	<label  for="wage">Enter your employee wage ($/hr):</label><input type="number" name="wage" id="wage" value="14.00" class="form-control" />
+	<label  for="employees">&nbsp;Enter the number of employees on the project:</label><input type="number" name="employees" id="employees" value="1" class="form-control" />
+</div>
+<div class="form-group col-xs-12 form-inline ">
+	<label>Project Cost: $</label>&nbsp;&nbsp;<input readonly id="projectTotalCost" class="form-control" />&nbsp;&nbsp;
+	<label>Cost per Employee: $</label>&nbsp;&nbsp;<input readonly id="costPerEmployee" class="form-control" />&nbsp;&nbsp;
+</div>
+<div class="form-group col-xs-12 form-inline ">
+	<label>Time in days (based on # of employees): </label>&nbsp;&nbsp;<input readonly id="projectTimeMonths" class="form-control" />Days&nbsp;&nbsp;
+	<label>Cost per Day: $</label>&nbsp;&nbsp;<input readonly id="costPerDay" class="form-control" />&nbsp;&nbsp;
+</div>
+<div class="form-group col-xs-12">
+	<button onclick="event.preventDefault(); calculateCost();" class="btn btn-primary">Calculate Project Cost</button>
+</div>
+</div>
+<br/>
 
                 <INPUT TYPE="RESET" Name="Reset" VALUE="Reset Data"
                        onClick="clearStatus()">
