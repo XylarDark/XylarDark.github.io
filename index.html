@@ -283,7 +283,8 @@
                 else if (type == 3) {
 		errors = (loc/100) * 0.75;
                 }
-		var round = roundOff(errors,0)
+		errors = errors * 1.5;
+		var round = roundOff(errors,0);
 		 $("#error").val(round);
                 document.calculateForm.Reset.focus();
 		}
