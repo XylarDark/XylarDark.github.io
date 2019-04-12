@@ -1,17 +1,23 @@
-<HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Jquery and Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<HEAD>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <TITLE>SiCOMO | The Simulated COCOMO</TITLE>
     <base target="_self">
 
-
     <!-- The speedsheet here in JSON -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="language_prod.js"></script>
-
-</HEAD>
+</head>
 
 <BODY>
     <div class="container">
@@ -1374,11 +1380,60 @@
         </FORM>
         <!--closing the body
         -->
-    </div>
-</BODY>
-<script type="text/javascript">
 
-</script>
+        <!-- Dan stuff -->
+    <div id="dan">
+        <h4>Use Case calculation - An alternative to Step 1</h4>
+        <table class="table table-bordered">
+            <caption class="collapse">
+                <p>Thanh Dat Cao</p>
+                <p>This is a higher abstraction alternative to the first step of Cocomo.</p>
+                <p>Calculation parameter of this calculation is taken from Use Case analysis, which is popular and important requirement analysis technique</p>
+                <ul>
+                    <li>Enter the number of use case and actor, categorized by their complexity</li>
+                    <li>Use Case complexity is categorized by the number of transaction in it</li>
+                    <li>Actor complexity is categorized by the type of actor (API vs command-line vs GUI)</li>
+                    <li>Calculation algorithm is based on the "Use Case Points" method</li>
+                    <li>This idea is based on this <a href="http://ceur-ws.org/Vol-1138/re4p21.pdf">paper</a></li>
+                </ul>
+            </caption>
+            <thead class="thead-dark">
+            <tr class="text-center">
+                <th scope="col"></th>
+                <th scope="col">Simple</th>
+                <th scope="col">Average</th>
+                <th scope="col">Complex</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="use-case-row">
+                <th scope="row">Use Cases</th>
+                <td><input class="form-control" type="number" name="simpleUseCase" value="0" required></td>
+                <td><input class="form-control" type="number" name="averageUseCase" value="0" required></td>
+                <td><input class="form-control" type="number" name="complexUseCase" value="0" required></td>
+            </tr>
+            <tr id="actor-row">
+                <th scope="row">Actors</th>
+                <td><input class="form-control" type="number" name="simpleActor" value="0" required></td>
+                <td><input class="form-control" type="number" name="averageActor" value="0" required></td>
+                <td><input class="form-control" type="number" name="complexActor" value="0" required></td>
+            </tr>
+            <tr class="text-right">
+                <td>
+                    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#dan caption">Show Info</button>
+                </td>
+                <td colspan="2">
+                    <button id="calculateUseCase" type="button" class="btn btn-primary">Calculate</button>
+                </td>
+                <td><p id="resultUseCase"></p></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</BODY>
+<script type="text/javascript" src="dan.js"></script>
 
 <!-- End of Code.
     -->
