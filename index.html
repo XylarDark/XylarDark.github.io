@@ -344,95 +344,131 @@
                 let costPerDay = (costPerEmployee / timeInDays) * numEmployees;
                 document.getElementById("costPerDay").value = costPerDay.toFixed(2);
             }
-            function showCost() {
+            function showCost(){
                 updateFinalResults();
+    }
+
+    function updateFinalResults(){
+        console.log('updated');
+        var hourly = document.getElementById('hourly').value;
+        var cost = document.getElementById('cost');
+        var dbChecked = document.getElementById('dbCheckedYes');
+        var apiChecked = document.getElementById('apiCheckedYes');
+
+
+        var rfp = document.getElementById('rfp');
+        var rLOC = document.getElementById('rloc');
+        var rtime = document.getElementById('rtime');
+        var rhours = document.getElementById('rhours');
+        var rcost = document.getElementById('rcost');
+        var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
+
+        totalCost = roundOff(workingHours * hourly, 2);
+        cost.value = totalCost;
+
+        console.log('and loc ' + androidLOC);
+        console.log('LOC ' + LOC);
+        console.log('FP ' + fp);
+        console.log('and fp ' + androidFP);
+
+
+        calculateAndroidProj();
+        if (androidLOC != "") {
+            console.log('here');
+            rfp.innerHTML = roundOff(androidFP, 2);
+            rLOC.innerHTML = roundOff(androidLOC, 2);
+            rtime.innerHTML = roundOff(androidMonths, 2);
+            rhours.innerHTML = roundOff(androidHours, 2);
+            rcost.innerHTML = "$" + roundOff(androidCost, 2);
+        } else {
+            console.log('else here');
+            rfp.innerHTML = fp;
+            rLOC.innerHTML = LOC;
+            rtime.innerHTML = timeInMonths;
+            rhours.innerHTML = workingHours
+            rcost.innerHTML = totalCost;
+        }
+    }
+
+    function calculateAndroidProj(){
+        console.log('calc android...');
+        var numActivity = document.getElementById('activities').value;
+        var dbChecked = document.getElementById('dbCheckedYes');
+        var apiChecked = document.getElementById('apiCheckedYes');
+        var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
+
+        //approx new LOC when adding activities
+        if (numActivity != 0 && numActivity != "") {
+            console.log('has activities');
+            androidLOC = parseFloat(LOC) + (numActivity * 100);
+            androidFP = parseFloat(fp) * 1.5;
+            androidMonths =  parseFloat(timeInMonths) + 1.2;
+            androidHours = parseFloat(workingHours) + 5;
+            androidCost = parseFloat(totalCost) + 100;
+
+            if (dbChecked.checked) {
+                console.log('db check');
+                androidLOC += 100;
+                androidFP = androidFP + 5;
+                androidMonths =  androidMonths + 0.5;
+                androidHours = androidHours + 15;
+                androidCost = androidCost + 100.5;
             }
 
-            function updateFinalResults() {
-                console.log('updated');
-                var hourly = document.getElementById('hourly').value;
-                var salary = document.getElementById('salary').value;
-                var cost = document.getElementById('cost');
-                var dbChecked = document.getElementById('dbCheckedYes');
-                var apiChecked = document.getElementById('apiCheckedYes');
-
-
-                var rfp = document.getElementById('rfp');
-                var rLOC = document.getElementById('rloc');
-                var rtime = document.getElementById('rtime');
-                var rhours = document.getElementById('rhours');
-                var rcost = document.getElementById('rcost');
-                var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
-
-                var totalCost = "$" + roundOff(workingHours * hourly, 2);
-                cost.value = totalCost;
-
-                console.log('and loc' + androidLOC);
-                console.log('LOC ' + LOC);
-                console.log('FP ' + fp);
-                console.log('and fp ' + androidFP);
-
-                if (androidLOC != "" || dbChecked.checked || apiChecked.checked) {
-                    console.log('here');
-                    rfp.innerHTML = androidFP;
-                    rLOC.innerHTML = androidLOC;
-                    rtime.innerHTML = roundOff(androidMonths, 2);
-                    rhours.innerHTML = androidHours;
-                    rcost.innerHTML = "$" + androidCost;
-                } else {
-                    console.log('else here');
-                    rfp.innerHTML = fp;
-                    rLOC.innerHTML = LOC;
-                    rtime.innerHTML = timeInMonths;
-                    rhours.innerHTML = workingHours
-                    rcost.innerHTML = totalCost;
-                }
+            if (apiChecked.checked) {
+                console.log('api check');
+                androidLOC += 200;
+                androidFP = androidFP + 5;
+                androidMonths =  androidMonths + 1;
+                androidHours = androidHours + 10;
+                androidCost = androidCost + 100;
             }
 
-            function calculateAndroidProj() {
-                var numActivity = document.getElementById('activities').value;
-                var dbChecked = document.getElementById('dbCheckedYes');
-                var apiChecked = document.getElementById('apiCheckedYes');
-                var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
+        } else {
+            console.log('no activities');
+            androidLOC = parseFloat(LOC);
+            androidFP = parseFloat(fp);
+            androidMonths =  parseFloat(timeInMonths);
+            androidHours = parseFloat(workingHours);
+            androidCost = parseFloat(totalCost);
 
-                //approx new LOC when adding activities
-                if (numActivity == 0) {
-                    androidLOC = parseFloat(LOC);
-                } else if (numActivity == "") {
-                    androidLOC = 0;
-                    androidFP = 0;
-                    androidHours = 0;
-                    androidMonths = 0;
-                    androidCost = 0;
-                }
-                else {
-                    androidLOC = parseFloat(LOC) + (numActivity * 100);
-                    androidFP = parseFloat(fp) + 1.5;
-                    androidMonths = parseFloat(timeInMonths) + 0.2;
-                    androidHours = parseFloat(workingHours) + 5;
-                    androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
-                }
-
-                if (dbChecked.checked) {
-                    console.log('db check');
-                    androidLOC += 100;
-                    androidFP = parseFloat(fp) + 5;
-                    androidMonths = parseFloat(timeInMonths) + 0.5;
-                    androidHours = parseFloat(workingHours) + 15;
-                    androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
-                }
-
-                if (apiChecked.checked) {
-                    console.log('api check');
-                    androidLOC += 200;
-                    androidFP = fp + 5;
-                    androidMonths = parseFloat(timeInMonths) + 1;
-                    androidHours = parseFloat(timeInMonths) + 10;
-                    androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
-                }
-
-                updateFinalResults();
+            if (dbChecked.checked) {
+                console.log('db check');
+                androidLOC += 100;
+                androidFP = androidFP + 5;
+                androidMonths =  androidMonths + 0.5;
+                androidHours = androidHours + 15;
+                androidCost = androidCost + 2.5;
             }
+
+            if (apiChecked.checked) {
+                console.log('api check');
+                androidLOC += 200;
+                androidFP = androidFP + 5;
+                androidMonths =  androidMonths + 1;
+                androidHours = androidHours + 10;
+                androidCost = androidCost + 2;
+            }
+        }
+
+        // updateFinalResults();
+    }
+
+    function clearAndroid(){
+        var numActivity = document.getElementById('activities');
+        var dbChecked = document.getElementById('dbCheckedYes');
+        var apiChecked = document.getElementById('apiCheckedYes');
+
+        numActivity.value = "";
+        dbChecked.checked = false;
+        apiChecked.checked = false;
+
+        androidLOC = 0;
+        androidFP = 0;
+        androidMonths =  0;
+        androidHours = 0;
+        androidCost = 0;
+    }
             // -->
             // End of JavaScript code
         </SCRIPT>
@@ -1225,7 +1261,7 @@
 
                     <INPUT TYPE="TEXT" VALUE="" NAME="Duration" size=10 onfocus="return unfocus_Duration()">
                     <BR><BR>
-                        
+
                     <div style="border: 1px solid black; border-radius: 15px; padding:20px;"
                         class="form-group col-xs-12">
                         <h4>Calculate Employee Cost:</h4>
