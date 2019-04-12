@@ -311,15 +311,15 @@
             function calculateDevelopmentTime() {
                 var duration = document.calculateForm.Duration.value;
 
-                var durationInDays = duration * 30.4167;
+                var durationInDays = roundOff(duration * 30.4167, 1);
 
                 var durationInHours = durationInDays * 24;
 
                 var clientMeetingHours = document.getElementById('client-meetings').value;
 
-                var durationReductionInHours = durationInHours - (clientMeetingHours * 4);
+                var durationReductionInHours = durationInHours - (clientMeetingHours * 8);
 
-                var durationReductionInDays = durationReductionInHours / 24;
+                var durationReductionInDays = roundOff(durationReductionInHours / 24, 1);
 
                 $("#oldDuration").val(durationInDays);
                 $("#durationReduction").val(durationReductionInDays);
