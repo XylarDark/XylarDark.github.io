@@ -317,7 +317,9 @@
 
                 var durationReduction = durationInHours - (clientMeetingHours * 3);
 
+                $("#oldDuration").val(durationInHours);
                 $("#durationReduction").val(durationReduction);
+
             }
 
             function calculateCost() {
@@ -1328,21 +1330,25 @@
                         </div>
                     </div>
                     <br />
-                    
+
                     <INPUT TYPE="RESET" Name="Reset" VALUE="Reset Data" onClick="clearStatus()">
                     
-                        <h4>Step 7: Calculate the errors of this project: <small class="text-muted">(Luke Thompson)</small>
+                        <h4>Step 7: Calculate Project Duration Reduction Based On Client Meeting Duration: <small class="text-muted">(Luke Thompson)</small>
                         </h4>
                         <div style="border: 1px solid black; border-radius: 15px; padding:20px;"
                         class="form-group col-xs-12">
     
                         <div class="form-group col-xs-12 form-inline ">
-                            <label for="client-meetings">Number of Client Meetings:</label><input name="client-meetings" id="client-meetings"
+                            <label for="client-meetings">Number Client Meeting Hours:</label><input name="client-meetings" id="client-meetings"
                                 class="form-control" />
                         </div>
                         <div class="form-group col-xs-12 form-inline ">
-                                <label>Development Hours Reduced By: </label>&nbsp;&nbsp;<input readonly id="durationReduction"
-                                    class="form-control" />&nbsp;Days &nbsp;&nbsp;
+                            <label>Old Total Development Hours: </label>&nbsp;&nbsp;<input readonly id="oldDuration"
+                                class="form-control" />&nbsp;Hours &nbsp;&nbsp;
+                        </div>                        
+                        <div class="form-group col-xs-12 form-inline ">
+                                <label>New Total Development Hours: </label>&nbsp;&nbsp;<input readonly id="durationReduction"
+                                    class="form-control" />&nbsp;Hours &nbsp;&nbsp;
                             </div>
                         <div class="form-group col-xs-12">
                             <button onclick="event.preventDefault(); calculateDevelopmentTime();"
