@@ -307,18 +307,22 @@
                 $("#error").val(round);
                 document.calculateForm.Reset.focus();
             }
-            
-            function calculateDevelopmentTime(){
+
+            function calculateDevelopmentTime() {
                 var duration = document.calculateForm.Duration.value;
-                
-                var durationInHours = ( duration * 30.4167 ) * 24;
+
+                var durationInDays = duration * 30.4167
+
+                var durationInHours = durationInDays * 24;
 
                 var clientMeetingHours = document.getElementById('client-meetings').value;
 
-                var durationReduction = durationInHours - (clientMeetingHours * 3);
+                var durationReductionInHours = durationInHours - (clientMeetingHours * 3);
 
-                $("#oldDuration").val(durationInHours);
-                $("#durationReduction").val(durationReduction);
+                var durationReductionInDays = durationReductionInHours / 24;
+
+                $("#durationInDays").val(durationInHours);
+                $("#durationReductionInDays").val(durationReduction);
 
             }
 
@@ -341,94 +345,94 @@
                 document.getElementById("costPerDay").value = costPerDay.toFixed(2);
             }
             function showCost() {
-        updateFinalResults();
-    }
+                updateFinalResults();
+            }
 
-    function updateFinalResults() {
-        console.log('updated');
-        var hourly = document.getElementById('hourly').value;
-        var salary = document.getElementById('salary').value;
-        var cost = document.getElementById('cost');
-        var dbChecked = document.getElementById('dbCheckedYes');
-        var apiChecked = document.getElementById('apiCheckedYes');
+            function updateFinalResults() {
+                console.log('updated');
+                var hourly = document.getElementById('hourly').value;
+                var salary = document.getElementById('salary').value;
+                var cost = document.getElementById('cost');
+                var dbChecked = document.getElementById('dbCheckedYes');
+                var apiChecked = document.getElementById('apiCheckedYes');
 
 
-        var rfp = document.getElementById('rfp');
-        var rLOC = document.getElementById('rloc');
-        var rtime = document.getElementById('rtime');
-        var rhours = document.getElementById('rhours');
-        var rcost = document.getElementById('rcost');
-        var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
+                var rfp = document.getElementById('rfp');
+                var rLOC = document.getElementById('rloc');
+                var rtime = document.getElementById('rtime');
+                var rhours = document.getElementById('rhours');
+                var rcost = document.getElementById('rcost');
+                var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
 
-        var totalCost = "$" + roundOff(workingHours * hourly, 2);
-        cost.value = totalCost;
+                var totalCost = "$" + roundOff(workingHours * hourly, 2);
+                cost.value = totalCost;
 
-        console.log('and loc' + androidLOC);
-        console.log('LOC ' + LOC);
-        console.log('FP ' + fp);
-        console.log('and fp ' + androidFP);
+                console.log('and loc' + androidLOC);
+                console.log('LOC ' + LOC);
+                console.log('FP ' + fp);
+                console.log('and fp ' + androidFP);
 
-        if (androidLOC != "" || dbChecked.checked || apiChecked.checked) {
-            console.log('here');
-            rfp.innerHTML = androidFP;
-            rLOC.innerHTML = androidLOC;
-            rtime.innerHTML = roundOff(androidMonths, 2);
-            rhours.innerHTML = androidHours;
-            rcost.innerHTML = "$" + androidCost;
-        } else {
-            console.log('else here');
-            rfp.innerHTML = fp;
-            rLOC.innerHTML = LOC;
-            rtime.innerHTML = timeInMonths;
-            rhours.innerHTML = workingHours
-            rcost.innerHTML = totalCost;
-        }
-    }
+                if (androidLOC != "" || dbChecked.checked || apiChecked.checked) {
+                    console.log('here');
+                    rfp.innerHTML = androidFP;
+                    rLOC.innerHTML = androidLOC;
+                    rtime.innerHTML = roundOff(androidMonths, 2);
+                    rhours.innerHTML = androidHours;
+                    rcost.innerHTML = "$" + androidCost;
+                } else {
+                    console.log('else here');
+                    rfp.innerHTML = fp;
+                    rLOC.innerHTML = LOC;
+                    rtime.innerHTML = timeInMonths;
+                    rhours.innerHTML = workingHours
+                    rcost.innerHTML = totalCost;
+                }
+            }
 
-    function calculateAndroidProj() {
-        var numActivity = document.getElementById('activities').value;
-        var dbChecked = document.getElementById('dbCheckedYes');
-        var apiChecked = document.getElementById('apiCheckedYes');
-        var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
+            function calculateAndroidProj() {
+                var numActivity = document.getElementById('activities').value;
+                var dbChecked = document.getElementById('dbCheckedYes');
+                var apiChecked = document.getElementById('apiCheckedYes');
+                var workingHours = roundOff(4.345 * (8 * 5) * timeInMonths, 2);
 
-        //approx new LOC when adding activities
-        if (numActivity == 0) {
-            androidLOC = parseFloat(LOC);
-        } else if (numActivity == "") {
-            androidLOC = 0;
-            androidFP = 0;
-            androidHours = 0;
-            androidMonths = 0;
-            androidCost = 0;
-        }
-        else {
-            androidLOC = parseFloat(LOC) + (numActivity * 100);
-            androidFP = parseFloat(fp) + 1.5;
-            androidMonths = parseFloat(timeInMonths) + 0.2;
-            androidHours = parseFloat(workingHours) + 5;
-            androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
-        }
+                //approx new LOC when adding activities
+                if (numActivity == 0) {
+                    androidLOC = parseFloat(LOC);
+                } else if (numActivity == "") {
+                    androidLOC = 0;
+                    androidFP = 0;
+                    androidHours = 0;
+                    androidMonths = 0;
+                    androidCost = 0;
+                }
+                else {
+                    androidLOC = parseFloat(LOC) + (numActivity * 100);
+                    androidFP = parseFloat(fp) + 1.5;
+                    androidMonths = parseFloat(timeInMonths) + 0.2;
+                    androidHours = parseFloat(workingHours) + 5;
+                    androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
+                }
 
-        if (dbChecked.checked) {
-            console.log('db check');
-            androidLOC += 100;
-            androidFP = parseFloat(fp) + 5;
-            androidMonths = parseFloat(timeInMonths) + 0.5;
-            androidHours = parseFloat(workingHours) + 15;
-            androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
-        }
+                if (dbChecked.checked) {
+                    console.log('db check');
+                    androidLOC += 100;
+                    androidFP = parseFloat(fp) + 5;
+                    androidMonths = parseFloat(timeInMonths) + 0.5;
+                    androidHours = parseFloat(workingHours) + 15;
+                    androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
+                }
 
-        if (apiChecked.checked) {
-            console.log('api check');
-            androidLOC += 200;
-            androidFP = fp + 5;
-            androidMonths = parseFloat(timeInMonths) + 1;
-            androidHours = parseFloat(timeInMonths) + 10;
-            androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
-        }
+                if (apiChecked.checked) {
+                    console.log('api check');
+                    androidLOC += 200;
+                    androidFP = fp + 5;
+                    androidMonths = parseFloat(timeInMonths) + 1;
+                    androidHours = parseFloat(timeInMonths) + 10;
+                    androidCost = roundOff(androidHours * document.getElementById('hourly').value, 2);
+                }
 
-        updateFinalResults();
-    }
+                updateFinalResults();
+            }
             // -->
             // End of JavaScript code
         </SCRIPT>
@@ -1265,28 +1269,6 @@
 
                     </div>
 
-                    <h4> Results Summary:</h4>
-
-                    <TABLE class="table">
-                        <tr>
-                            <td>FP</td>
-                            <td>LOC</td>
-                            <td>Time/months</td>
-                            <td>Working Hours</td>
-                            <td>Total Cost</td>
-                        </tr>
-                        <tr>
-                            <td id="rfp"></td>
-                            <td id="rloc"></td>
-                            <td id="rtime"></td>
-                            <td id="rhours"></td>
-                            <td id="rcost"></td>
-                        </tr>
-                    </TABLE>
-
-
-
-
                     <h4>Step 5: Calculate the cost of this project: <small class="text-muted">(Richard Choppick)</small>
                     </h4>
                     <div style="border: 1px solid black; border-radius: 15px; padding:20px;"
@@ -1332,33 +1314,52 @@
                     <br />
 
                     <INPUT TYPE="RESET" Name="Reset" VALUE="Reset Data" onClick="clearStatus()">
-                    
-                        <h4>Step 7: Calculate Project Duration Reduction Based On Client Meeting Duration: <small class="text-muted">(Luke Thompson)</small>
-                        </h4>
-                        <div style="border: 1px solid black; border-radius: 15px; padding:20px;"
+
+                    <h4>Step 7: Calculate Project Duration Reduction Based On Client Meeting Duration: <small
+                            class="text-muted">(Luke Thompson)</small>
+                    </h4>
+                    <div style="border: 1px solid black; border-radius: 15px; padding:20px;"
                         class="form-group col-xs-12">
-    
+
                         <div class="form-group col-xs-12 form-inline ">
-                            <label for="client-meetings">Number Client Meeting Hours:</label><input name="client-meetings" id="client-meetings"
-                                class="form-control" />
+                            <label for="client-meetings">Total Client Meeting Hours:</label><input
+                                name="client-meetings" id="client-meetings" class="form-control" />
                         </div>
                         <div class="form-group col-xs-12 form-inline ">
-                            <label>Old Total Development Hours: </label>&nbsp;&nbsp;<input readonly id="oldDuration"
+                            <label>Old Total Development Days: </label>&nbsp;&nbsp;<input readonly id="oldDuration"
                                 class="form-control" />&nbsp;Hours &nbsp;&nbsp;
-                        </div>                        
+                        </div>
                         <div class="form-group col-xs-12 form-inline ">
-                                <label>New Total Development Hours: </label>&nbsp;&nbsp;<input readonly id="durationReduction"
-                                    class="form-control" />&nbsp;Hours &nbsp;&nbsp;
-                            </div>
+                            <label>New Total Development Days: </label>&nbsp;&nbsp;<input readonly
+                                id="durationReduction" class="form-control" />&nbsp;Hours &nbsp;&nbsp;
+                        </div>
                         <div class="form-group col-xs-12">
                             <button onclick="event.preventDefault(); calculateDevelopmentTime();"
                                 class="btn btn-primary">Calculate Development Time</button>
                         </div>
                     </div>
                     <br />
-    
+
                     <INPUT TYPE="RESET" Name="Reset" VALUE="Reset Data" onClick="clearStatus()">
 
+                    <h4> Results Summary:</h4>
+
+                    <TABLE class="table">
+                        <tr>
+                            <td>FP</td>
+                            <td>LOC</td>
+                            <td>Time/months</td>
+                            <td>Working Hours</td>
+                            <td>Total Cost</td>
+                        </tr>
+                        <tr>
+                            <td id="rfp"></td>
+                            <td id="rloc"></td>
+                            <td id="rtime"></td>
+                            <td id="rhours"></td>
+                            <td id="rcost"></td>
+                        </tr>
+                    </TABLE>
 
         </FORM>
         <!--closing the body
