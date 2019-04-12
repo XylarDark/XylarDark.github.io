@@ -1101,7 +1101,7 @@
 
                     <br /><br />
 
-                    <h4>(Optional) Is this an Android project: </h4>
+                    <h4>3.5 Android project: (optional) </h4>
 
                     <TABLE class="table">
                         <thead>
@@ -1146,7 +1146,9 @@
                         </tbody>
                     </TABLE>
 
-                    <INPUT TYPE="button" VALUE="Update" onClick="calculateAndroidProj()">
+                    <INPUT TYPE="button" VALUE="Clear Android" onClick="clearAndroid()">
+
+                    <br /><br />
 
                     <!-- Android End -->
 
@@ -1223,22 +1225,21 @@
 
                     <INPUT TYPE="TEXT" VALUE="" NAME="Duration" size=10 onfocus="return unfocus_Duration()">
                     <BR><BR>
-
+                        
                     <div style="border: 1px solid black; border-radius: 15px; padding:20px;"
                         class="form-group col-xs-12">
                         <h4>Calculate Employee Cost:</h4>
 
                         Hourly Wage
                         <INPUT id="hourly" TYPE="TEXT" value="" size=5>
-                        Salary
-                        <INPUT id="salary" TYPE="TEXT" value="" size=5>
                         <br /><br>
                         <p>Cost = working hours * wage</p>
                         <INPUT id="cost" TYPE="TEXT" NAME="cost" value="" size=10>
-
-                        <INPUT TYPE="BUTTON" Name="calculate" VALUE="Calculate Cost" onClick="showCost()">
+                        <br /><br />
+                        <INPUT TYPE="BUTTON" Name="calculate" VALUE="Calculate Cost / Show Summary"
+                            onClick="showCost()">
                         <!-- a button which the user can click it to reset all fields on the form
-                -->
+                            -->
 
                     </div>
 
@@ -1299,11 +1300,11 @@
                                 name="client-meetings" id="client-meetings" class="form-control" />
                         </div>
                         <div class="form-group col-xs-12 form-inline ">
-                            <label>Old Total Development Days:     </label>&nbsp;&nbsp;<input readonly id="oldDuration"
+                            <label>Old Total Development Days: </label>&nbsp;&nbsp;<input readonly id="oldDuration"
                                 class="form-control" />&nbsp;Days &nbsp;&nbsp;
                         </div>
                         <div class="form-group col-xs-12 form-inline ">
-                            <label>New Total Development Days:     </label>&nbsp;&nbsp;<input readonly
+                            <label>New Total Development Days: </label>&nbsp;&nbsp;<input readonly
                                 id="durationReduction" class="form-control" />&nbsp;Days &nbsp;&nbsp;
                         </div>
                         <div class="form-group col-xs-12">
